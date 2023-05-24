@@ -1,12 +1,12 @@
 import React from 'react';
 import { VStack, Image, Text, Center, Heading, ScrollView } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 
 import LogoSvg from '@assets/logo.svg';
 import BackgroundImg from '@assets/background.png';
 
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
-import { useNavigation } from '@react-navigation/native';
 
 export function SignUp() {
   const navigation = useNavigation();
