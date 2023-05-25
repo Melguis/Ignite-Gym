@@ -1,0 +1,84 @@
+Create project: expo init ignitegym
+Install babel: npm install --save-dev babel-plugin-module-resolver
+
+Babel.config.js plugin: plugins: [
+  [
+    'module-resolver',
+    {
+      root: ['./src'],
+      alias: {
+        '@dtos': './src/dtos',
+        '@assets': './src/assets',
+        '@components': './src/components',
+        '@screens': './src/screens',
+        '@storage': './src/storage',
+        '@utils': './src/utils',
+        '@services': './src/services',
+        '@hooks': './src/hooks',
+        '@contexts': './src/contexts',
+        '@routes': './src/routes'
+      }
+    },
+  ],
+],
+
+tsconfig.json: {
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "@dtos/*": [
+        "src/dtos/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@screens/*": [
+        "./src/screens/*"
+      ],
+      "@storage/*": [
+        "./src/storage/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@contexts/*": [
+        "./src/contexts/*"
+      ],
+      "@routes/*": [
+        "./src/routes/*"
+      ]
+    }
+  }
+}
+
+installing the font using expo google fonts: npx expo install expo-font @expo-google-fonts/roboto
+
+criar pasta src
+
+criar pasta theme e colocar as cores e fonts que serão utilizadas. Depois, colocar o THEME no app.tsx e englobar em toda a aplicação
+
+Erro ao importar arquivo png? Crie uma pasta em src com o nome de @types, crie um arquivo com o nome de png.d.ts e coloque: declare module "*.png";
+
+
+Navegação:
+
+Instalar o react navigation:
+
+npm i @react-navigation/native
+
+npx expo install react-native-screens react-native-safe-area-context
+
+npm install @react-navigation/native-stack
+
+GLITCH TELA BRANCA: Colocar uma box em volta do NavigationContainer com o background da mesma cor do tema, evitando o glitch ao trocar de tela.
