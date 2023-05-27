@@ -82,3 +82,12 @@ npx expo install react-native-screens react-native-safe-area-context
 npm install @react-navigation/native-stack
 
 GLITCH TELA BRANCA: Colocar uma box em volta do NavigationContainer com o background da mesma cor do tema, evitando o glitch ao trocar de tela.
+
+***************************************************************************************************************************
+
+INTEGRAÇÃO COM BACK-END.
+
+Instalar beekeeper studio - Serve para visualizar os dados do banco de dados.
+
+No android (talvez apple também?) não encontra o localhost:port do back-end, 
+portanto usar o ipconfig (ifconfig no mac/linux) e pegar o IP da máquina (IPv4 no windows) e colocar como parâmetro de url do fetch
