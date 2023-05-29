@@ -3,7 +3,7 @@ import { NativeBaseProvider } from 'native-base';
 import { Routes } from './src/routes';
 import { THEME } from './src/theme';
 
-import { AuthContext } from '@contexts/AuthContext';
+import { AuthContextProvider } from '@contexts/AuthContext';
 
 import { Loading } from '@components/Loading';
 
@@ -19,14 +19,9 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      <AuthContext.Provider value={{
-        id: '1',
-        name: 'Jorge',
-        email: "jorge@hm.com",
-        avatar: 'jorge.png'
-      }}>
+      <AuthContextProvider>
         {fontsLoaded ? <Routes /> : <Loading />}
-      </AuthContext.Provider>
+      </AuthContextProvider>
     </NativeBaseProvider>
   );
 }

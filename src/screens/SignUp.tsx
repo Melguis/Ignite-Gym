@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { VStack, Image, Text, Center, Heading, ScrollView, useToast } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
@@ -5,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { api } from '@services/api';
+import { useAuth } from '@hooks/useAuth';
 
 import { AppError } from '@utils/AppError';
 
@@ -22,20 +24,21 @@ type FormDataProps = {
 }
 
 const signUpSchema = yup.object({
-  name: yup.string().required('informe o nome.'),
-  email: yup.string().required('informe o email.').email('E-mail inválido.'),
-  password: yup.string().required('informe a senha.').min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+  name: yup.string().required('Informe o nome.'),
+  email: yup.string().required('Informe o email.').email('E-mail inválido.'),
+  password: yup.string().required('Informe a senha.').min(6, 'A senha deve ter pelo menos 6 dígitos.'),
   password_confirm: yup.string().required('Confirme a senha').oneOf([yup.ref('password')], 'A confirmação da senha não confere'),
 });
 
 export function SignUp() {
+  const [isLoading, setIsLoading] = useState(false);
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(signUpSchema)
   });
 
   const toast = useToast();
-
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   function handleGoBack() {
     navigation.goBack();
@@ -43,9 +46,14 @@ export function SignUp() {
 
   async function handleSignUp({ name, email, password }: FormDataProps) {
     try {
-      const response = await api.post('/users', { name, email, password });
-      console.log(response.data);
+      setIsLoading(true);
+
+      await api.post('/users', { name, email, password });
+      await signIn(email, password);
+
     } catch (error) {
+      setIsLoading(false);
+
       const isAppError = error instanceof AppError;
       const title = isAppError ? error.message : 'Não foi possível criar a conta. Tente novamente mais tarde.';
 
@@ -142,6 +150,7 @@ export function SignUp() {
           <Button
             title="Criar e acessar"
             onPress={handleSubmit(handleSignUp)}
+            isLoading={isLoading}
           />
         </Center>
 
